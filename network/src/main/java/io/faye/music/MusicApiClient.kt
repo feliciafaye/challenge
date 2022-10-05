@@ -1,11 +1,11 @@
 package io.faye.music
 
 import arrow.core.Either
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
 import io.faye.music.dto.DataDto
 import io.faye.music.dto.MusicApiDto
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,7 +31,7 @@ class MusicApiClient @Inject constructor(private val httpClient: HttpClient) {
 									it.currentTrack.title.lowercase().contains(searchTermLower) ||
 									it.genres.joinToString(separator = " ").lowercase().contains(searchTerm)
 						}
-					MusicApiDto(DataDto(filteredSessions))
+					MusicApiDto(DataDto(filteredSessions.shuffled()))
 				}
 		}
 
